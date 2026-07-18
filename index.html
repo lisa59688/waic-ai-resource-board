@@ -369,8 +369,42 @@
       border: 1px solid var(--edge);
       border-radius: 10px;
       background: rgba(0,0,0,0.35);
-      padding: 8px;
       overflow: hidden;
+    }
+    .card-photo-toggle {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      font-size: 12px;
+      padding: 10px 12px;
+      cursor: pointer;
+      transition: color .2s, background .2s;
+    }
+    .card-photo-toggle:hover {
+      color: #e0f2fe;
+      background: rgba(56, 189, 248, 0.08);
+    }
+    .card-photo-toggle .chev {
+      width: 14px;
+      height: 14px;
+      transition: transform .2s;
+      color: var(--dim);
+    }
+    .card-photo.is-open .card-photo-toggle .chev {
+      transform: rotate(180deg);
+      color: #7dd3fc;
+    }
+    .card-photo-body {
+      display: none;
+      padding: 0 8px 10px;
+    }
+    .card-photo.is-open .card-photo-body {
+      display: block;
     }
     .card-photo img {
       display: block;
@@ -590,8 +624,14 @@
       function renderCardPhoto(entry) {
         if (!entry.card) return '';
         return '<div class="card-photo">' +
-          '<img src="' + escapeHtml(entry.card) + '" alt="' + escapeHtml(entry.name) + ' 名片" loading="lazy" onerror="this.parentElement.style.display=\'none\'" />' +
-          '<p class="disclaimer">由用户上传，若侵权请联系平台删除</p>' +
+          '<button type="button" class="card-photo-toggle">' +
+            '<span class="card-photo-label">点击查看名片</span>' +
+            '<svg class="chev" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>' +
+          '</button>' +
+          '<div class="card-photo-body">' +
+            '<img src="' + escapeHtml(entry.card) + '" alt="' + escapeHtml(entry.name) + ' 名片" loading="lazy" onerror="this.closest(\'.card-photo\').style.display=\'none\'" />' +
+            '<p class="disclaimer">由用户上传，若侵权请联系平台删除</p>' +
+          '</div>' +
           '</div>';
       }
       function renderCard(entry, index, query) {
@@ -625,6 +665,15 @@
             const cards = [...board.querySelectorAll('.biz-card')];
             allOpen = cards.length > 0 && cards.every(c => c.classList.contains('is-open'));
             syncBulkLabel();
+          });
+
+          const photo = card.querySelector('.card-photo');
+          if (!photo) return;
+          const photoBtn = photo.querySelector('.card-photo-toggle');
+          const photoLabel = photo.querySelector('.card-photo-label');
+          photoBtn.addEventListener('click', () => {
+            const open = photo.classList.toggle('is-open');
+            photoLabel.textContent = open ? '收起名片' : '点击查看名片';
           });
         });
       }
