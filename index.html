@@ -134,6 +134,117 @@
     }
     .closing strong { color: var(--mint); font-weight: 700; }
 
+    /* 企业名墙 · 词云感浮动 */
+    .company-wall {
+      position: relative;
+      margin: 0 0 36px;
+      padding: 22px 16px 20px;
+      border: 1px solid var(--edge);
+      border-radius: 18px;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 40%, rgba(56, 189, 248, 0.07), transparent 70%),
+        linear-gradient(165deg, #0c1420 0%, #080d14 100%);
+      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.04) inset, 0 16px 40px rgba(0,0,0,0.4);
+      overflow: hidden;
+    }
+    .company-wall::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(56, 189, 248, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(56, 189, 248, 0.04) 1px, transparent 1px);
+      background-size: 28px 28px;
+      mask-image: radial-gradient(ellipse 70% 65% at 50% 50%, #000 20%, transparent 75%);
+      pointer-events: none;
+    }
+    .company-wall .wall-head {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      margin-bottom: 6px;
+    }
+    .company-wall .wall-head .eyebrow {
+      letter-spacing: 0.22em;
+    }
+    .company-wall h2 {
+      margin: 8px 0 0;
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.02em;
+    }
+    .company-wall .wall-desc {
+      margin: 8px auto 0;
+      max-width: 28rem;
+      font-size: 12px;
+      line-height: 1.7;
+      color: var(--dim);
+    }
+    .cloud {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 10px 12px;
+      min-height: 168px;
+      padding: 22px 8px 10px;
+    }
+    .cloud-chip {
+      --float-y: 6px;
+      --float-dur: 5.5s;
+      --float-delay: 0s;
+      --tilt: 0deg;
+      appearance: none;
+      border: 1px solid rgba(56, 189, 248, 0.28);
+      border-radius: 8px;
+      background: linear-gradient(155deg, rgba(30, 44, 68, 0.95), rgba(18, 28, 44, 0.92));
+      color: #e2e8f0;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      padding: 10px 16px;
+      cursor: pointer;
+      box-shadow:
+        0 1px 0 rgba(125, 211, 252, 0.1) inset,
+        0 8px 20px rgba(0, 0, 0, 0.35);
+      transform: rotate(var(--tilt));
+      animation: chipFloat var(--float-dur) ease-in-out infinite;
+      animation-delay: var(--float-delay);
+      transition: border-color .2s, color .2s, background .2s, box-shadow .2s, transform .2s;
+    }
+    .cloud-chip.size-sm { font-size: 12px; padding: 8px 12px; opacity: 0.88; }
+    .cloud-chip.size-md { font-size: 14px; padding: 10px 16px; }
+    .cloud-chip.size-lg {
+      font-size: 16px;
+      padding: 12px 20px;
+      border-color: rgba(94, 234, 212, 0.35);
+      color: #f0fdfa;
+      background: linear-gradient(155deg, rgba(24, 52, 58, 0.95), rgba(16, 32, 48, 0.95));
+    }
+    @media (hover: hover) {
+      .cloud-chip:hover {
+        animation-play-state: paused;
+        border-color: #38bdf8;
+        color: #fff;
+        background: linear-gradient(155deg, #1e3a55, #152536);
+        box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.2), 0 12px 28px rgba(0, 0, 0, 0.5);
+        transform: rotate(0deg) translateY(-2px) scale(1.04);
+      }
+    }
+    .cloud-chip:focus-visible {
+      outline: 2px solid #38bdf8;
+      outline-offset: 3px;
+    }
+    @keyframes chipFloat {
+      0%, 100% { transform: rotate(var(--tilt)) translateY(0); }
+      50% { transform: rotate(var(--tilt)) translateY(calc(var(--float-y) * -1)); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .cloud-chip { animation: none; }
+    }
+
     .toolbar {
       display: flex;
       flex-direction: column;
@@ -248,6 +359,11 @@
         0 1px 0 rgba(125, 211, 252, 0.08) inset,
         0 12px 36px rgba(0, 0, 0, 0.45);
       transition: transform .2s, border-color .2s, box-shadow .2s;
+      scroll-margin-top: 24px;
+    }
+    .biz-card.is-flash {
+      border-color: #38bdf8;
+      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.35), 0 16px 40px rgba(0,0,0,0.55);
     }
     .biz-card::before {
       content: '';
@@ -535,7 +651,16 @@
       </div>
     </header>
 
-    <section>
+    <section class="company-wall" aria-labelledby="company-wall-title">
+      <div class="wall-head">
+        <p class="eyebrow">COMPANY MAP</p>
+        <h2 id="company-wall-title">已对接企业速览</h2>
+        <p class="wall-desc">以下为企业已留下联系方式的速览图，点击名称即可直达对应名片。</p>
+      </div>
+      <div id="company-cloud" class="cloud" role="navigation" aria-label="企业速览"></div>
+    </section>
+
+    <section id="board-section">
       <div class="toolbar">
         <div>
           <h2>公开对接名片墙</h2>
@@ -571,17 +696,18 @@
     (() => {
       'use strict';
       const entries = [
-        { company: '友学伴（北京）教育科技有限公司', bizTypes: ['TO C'], title: '联合创始人', name: '唐言为', contact: 'tangyanwei@yourxueban.com', offer: '暂无', ask: '暂无', aiMatch: null, card: 'cards/tangyanwei.png' },
-        { company: '友学伴（北京）教育科技有限公司', bizTypes: ['TO C'], title: '联合创始人', name: '王奕文', contact: 'wangyiwen@yourxueban.com', offer: '暂无', ask: '暂无', aiMatch: null, card: 'cards/wangyiwen.png' },
-        { company: '苏度 (sudo.ai)', bizTypes: ['TO B'], title: '大客户经理', name: '徐晨伊', contact: '17701665605 / xuchenyi@sudo.ai', offer: '暂无', ask: '暂无', aiMatch: null, card: 'cards/xuchenyi.png' },
-        { company: 'BrainCo 强脑科技', bizTypes: ['TO B', 'TO C'], title: '渠道总监', name: '张文华 (Alex)', contact: '13691880776 / wenhua.zhang@brainco.cn', offer: '暂无', ask: '暂无', aiMatch: null, card: 'cards/zhangwenhua.png' },
-        { company: 'BrainCo 强脑科技', bizTypes: ['TO B', 'TO C'], title: '灵巧手销售总监', name: '王少凯 (Allen)', contact: '18027650531 / shaokai.wang@brainco.cn', offer: '暂无', ask: '暂无', aiMatch: null, card: 'cards/wangshaokai.png' },
-        { company: '合肥乐聚机器人技术有限公司', bizTypes: ['TO B', 'TO C'], title: '销售经理', name: '刘世禧', contact: '17521505550 / liushilei@lejurobot.com', offer: '暂无', ask: '暂无', aiMatch: null, card: 'cards/liushixi.png' },
-        { company: '商汤科技', bizTypes: ['TO B', 'TO G'], title: '灵境事业部行业总监', name: '彭荣亮', contact: '+86 13333818916 / pengrongliang@sensetime.com', offer: '暂无', ask: '暂无', aiMatch: null, card: 'cards/pengrongliang.png' },
-        { company: 'BrainCo 强脑科技', bizTypes: ['TO B', 'TO C'], title: '销售经理', name: '聂晶伟 (Vera)', contact: '15810785949 / jingwei.nie@brainco.cn', offer: '暂无', ask: '暂无', aiMatch: null, card: 'cards/niejingwei.png' }
+        { company: '友学伴（北京）教育科技有限公司', short: '友学伴', bizTypes: ['TO C'], title: '联合创始人', name: '唐言为', contact: 'tangyanwei@yourxueban.com', offer: '暂无', ask: '暂无', aiMatch: null, card: 'cards/tangyanwei.png' },
+        { company: '友学伴（北京）教育科技有限公司', short: '友学伴', bizTypes: ['TO C'], title: '联合创始人', name: '王奕文', contact: 'wangyiwen@yourxueban.com', offer: '暂无', ask: '暂无', aiMatch: null, card: 'cards/wangyiwen.png' },
+        { company: '苏度 (sudo.ai)', short: '苏度', bizTypes: ['TO B'], title: '大客户经理', name: '徐晨伊', contact: '17701665605 / xuchenyi@sudo.ai', offer: '暂无', ask: '暂无', aiMatch: null, card: 'cards/xuchenyi.png' },
+        { company: 'BrainCo 强脑科技', short: 'BrainCo', bizTypes: ['TO B', 'TO C'], title: '渠道总监', name: '张文华 (Alex)', contact: '13691880776 / wenhua.zhang@brainco.cn', offer: '暂无', ask: '暂无', aiMatch: null, card: 'cards/zhangwenhua.png' },
+        { company: 'BrainCo 强脑科技', short: 'BrainCo', bizTypes: ['TO B', 'TO C'], title: '灵巧手销售总监', name: '王少凯 (Allen)', contact: '18027650531 / shaokai.wang@brainco.cn', offer: '暂无', ask: '暂无', aiMatch: null, card: 'cards/wangshaokai.png' },
+        { company: '合肥乐聚机器人技术有限公司', short: '乐聚机器人', bizTypes: ['TO B', 'TO C'], title: '销售经理', name: '刘世禧', contact: '17521505550 / liushilei@lejurobot.com', offer: '暂无', ask: '暂无', aiMatch: null, card: 'cards/liushixi.png' },
+        { company: '商汤科技', short: '商汤', bizTypes: ['TO B', 'TO G'], title: '灵境事业部行业总监', name: '彭荣亮', contact: '+86 13333818916 / pengrongliang@sensetime.com', offer: '暂无', ask: '暂无', aiMatch: null, card: 'cards/pengrongliang.png' },
+        { company: 'BrainCo 强脑科技', short: 'BrainCo', bizTypes: ['TO B', 'TO C'], title: '销售经理', name: '聂晶伟 (Vera)', contact: '15810785949 / jingwei.nie@brainco.cn', offer: '暂无', ask: '暂无', aiMatch: null, card: 'cards/niejingwei.png' }
       ];
       const tagClass = { 'TO G': 'tag-g', 'TO B': 'tag-b', 'TO C': 'tag-c' };
       const board = document.getElementById('board');
+      const companyCloud = document.getElementById('company-cloud');
       const searchInput = document.getElementById('search-input');
       const searchClear = document.getElementById('search-clear');
       const searchMeta = document.getElementById('search-meta');
@@ -592,6 +718,65 @@
 
       function escapeHtml(str) {
         return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+      }
+      function companyKey(name) {
+        return String(name || '').trim().toLowerCase();
+      }
+      function buildCompanyIndex() {
+        const map = new Map();
+        entries.forEach((e, i) => {
+          const key = companyKey(e.company);
+          if (!map.has(key)) {
+            map.set(key, {
+              company: e.company,
+              short: e.short || e.company,
+              count: 0,
+              firstIndex: i
+            });
+          }
+          map.get(key).count += 1;
+        });
+        return [...map.values()];
+      }
+      function chipSize(count) {
+        if (count >= 3) return 'size-lg';
+        if (count >= 2) return 'size-md';
+        return 'size-sm';
+      }
+      function renderCompanyCloud() {
+        if (!companyCloud) return;
+        const companies = buildCompanyIndex();
+        const tilts = [-2.4, 1.6, -1.2, 2.2, -1.8, 1.1, -0.8];
+        const floats = [5, 7, 6, 8, 5.5, 7.5, 6.5];
+        const durs = [5.2, 6.4, 5.8, 7.1, 6.0, 5.5, 6.8];
+        companyCloud.innerHTML = companies.map((c, i) => {
+          const style = [
+            '--tilt:' + tilts[i % tilts.length] + 'deg',
+            '--float-y:' + floats[i % floats.length] + 'px',
+            '--float-dur:' + durs[i % durs.length] + 's',
+            '--float-delay:' + (i * 0.35).toFixed(2) + 's'
+          ].join(';');
+          return '<button type="button" class="cloud-chip ' + chipSize(c.count) + '" style="' + style + '" data-company="' + escapeHtml(c.company) + '" title="' + escapeHtml(c.company) + ' · ' + c.count + ' 位联系人">' +
+            escapeHtml(c.short) +
+            '</button>';
+        }).join('');
+        companyCloud.querySelectorAll('.cloud-chip').forEach(btn => {
+          btn.addEventListener('click', () => jumpToCompany(btn.getAttribute('data-company')));
+        });
+      }
+      function jumpToCompany(company) {
+        if (!company) return;
+        if (searchInput.value) {
+          searchInput.value = '';
+          render('');
+        }
+        const key = companyKey(company);
+        const target = [...board.querySelectorAll('.biz-card')].find(el => companyKey(el.getAttribute('data-company')) === key);
+        if (!target) return;
+        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        board.querySelectorAll('.biz-card.is-flash').forEach(el => el.classList.remove('is-flash'));
+        target.classList.add('is-flash');
+        window.setTimeout(() => target.classList.remove('is-flash'), 1600);
       }
       function highlight(text, query) {
         const raw = String(text ?? '');
@@ -637,7 +822,7 @@
       function renderCard(entry, index, query) {
         const openClass = allOpen ? ' is-open' : '';
         const label = allOpen ? '收起供需详情' : '展开供需详情';
-        return '<article class="biz-card fade-item' + openClass + '" style="animation-delay:' + (Math.min(index,8)*0.04) + 's">' +
+        return '<article class="biz-card fade-item' + openClass + '" id="card-' + index + '" data-company="' + escapeHtml(entry.company) + '" style="animation-delay:' + (Math.min(index,8)*0.04) + 's">' +
           '<div class="tags">' + renderTags(entry.bizTypes) + '</div>' +
           '<h3 class="company-name">' + highlight(entry.company, query) + '</h3>' +
           '<p class="sub"><span class="t">' + highlight(entry.title, query) + '</span><span class="sep">·</span><span>' + highlight(entry.name, query) + '</span></p>' +
@@ -703,6 +888,7 @@
       let timer = null;
       searchInput.addEventListener('input', () => { clearTimeout(timer); timer = setTimeout(() => render(searchInput.value), 120); });
       searchClear.addEventListener('click', () => { searchInput.value=''; render(''); searchInput.focus(); });
+      renderCompanyCloud();
       render('');
     })();
   </script>
