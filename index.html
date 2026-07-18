@@ -19,16 +19,13 @@
             sky: '#38bdf8'
           },
           fontFamily: {
-            display: ['"Syne"', '"Noto Sans SC"', 'sans-serif'],
-            body: ['"Noto Sans SC"', '"PingFang SC"', 'sans-serif']
+            display: ['"PingFang SC"', '"Hiragino Sans GB"', '"Microsoft YaHei"', 'sans-serif'],
+            body: ['"PingFang SC"', '"Hiragino Sans GB"', '"Microsoft YaHei"', 'sans-serif']
           }
         }
       }
     }
   </script>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
   <style>
     body {
       min-height: 100dvh;
@@ -251,17 +248,24 @@
 
     <aside class="mt-10 flex flex-col items-center gap-2 rounded-2xl border border-edge bg-ink/60 px-4 py-5 text-center">
       <img
-        src="qr_placeholder.png"
+        src="https://cdn.jsdelivr.net/gh/lisa59688/waic-ai-resource-board@main/qr_placeholder.png"
         alt="扫码打开公益 AI 产业资源对接计划"
         width="160"
         height="160"
         class="rounded-xl border border-edge bg-white p-2"
       />
-      <p class="text-xs text-slate-400">扫码打开本页 · 亦可长按保存转发</p>
+      <p class="text-xs text-slate-400">扫码打开本页 · 建议用系统浏览器打开</p>
       <a
-        href="https://lisa59688.github.io/waic-ai-resource-board/"
+        id="share-link"
+        href="https://raw.githack.com/lisa59688/waic-ai-resource-board/main/index.html"
         class="break-all text-[11px] text-cyan-soft/80 transition-all duration-200 hover:text-cyan-soft"
-      >https://lisa59688.github.io/waic-ai-resource-board/</a>
+      >https://raw.githack.com/lisa59688/waic-ai-resource-board/main/index.html</a>
+      <p class="mt-1 max-w-md text-[10px] leading-relaxed text-slate-600">
+        若微信内打不开，请点右上角「在浏览器打开」。备用：
+        <a class="text-slate-400 underline" href="https://cdn.statically.io/gh/lisa59688/waic-ai-resource-board/main/index.html">statically</a>
+        ·
+        <a class="text-slate-400 underline" href="https://lisa59688.github.io/waic-ai-resource-board/">GitHub Pages</a>
+      </p>
     </aside>
 
     <footer class="mt-8 text-center text-[10px] text-slate-600 sm:text-xs">
