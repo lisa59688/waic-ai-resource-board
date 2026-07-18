@@ -364,6 +364,30 @@
       color: #7dd3fc;
     }
 
+    .card-photo {
+      margin-top: 12px;
+      border: 1px solid var(--edge);
+      border-radius: 10px;
+      background: rgba(0,0,0,0.35);
+      padding: 8px;
+      overflow: hidden;
+    }
+    .card-photo img {
+      display: block;
+      width: 100%;
+      max-height: 420px;
+      object-fit: contain;
+      border-radius: 6px;
+      background: #fff;
+    }
+    .card-photo .disclaimer {
+      margin: 8px 2px 2px;
+      font-size: 10px;
+      line-height: 1.5;
+      color: #64748b;
+      text-align: center;
+    }
+
     .empty {
       display: none;
       text-align: center;
@@ -513,11 +537,14 @@
     (() => {
       'use strict';
       const entries = [
-        { company: '星核智能科技', bizTypes: ['TO B'], title: '商务VP', name: '陈思远', contact: 'chen_sy_ai', offer: '企业级多模态大模型私有化部署方案，已服务制造/金融场景，支持本地化部署与合规审计。', ask: '寻找具备行业数据沉淀的制造业客户，以及对AI质检、工艺优化有明确预算的集成商。', aiMatch: true },
-        { company: '灵动机器人', bizTypes: ['TO B', 'TO G'], title: '产品总监', name: '赵雨桐', contact: '138****6621', offer: '自研协作机器人关节模组，峰值扭矩 280N·m，已量产交付，可提供整机联调支持。', ask: '对接整机厂、产线集成商；希望采购视觉定位与力控算法模块。', aiMatch: true },
-        { company: '青澜数据', bizTypes: ['TO C', 'TO B'], title: '创始人', name: '林晓', contact: 'qinglan_data', offer: '面向消费者的AI健康顾问App，日活 12万+；另可开放B端白标SDK。', ask: '寻求医疗器械渠道合作方，以及愿意联合做内容共创的IP方。', aiMatch: false },
-        { company: '云栈算力', bizTypes: ['TO B'], title: '解决方案架构师', name: '周凯', contact: 'yunzhan_gpu', offer: '弹性GPU算力池 + 推理加速中间件，支持国产芯片混部，按量计费。', ask: '对接有推理成本压力的AIGC/Agent创业团队，可提供首月算力补贴包。', aiMatch: true },
-        { company: '启明教育科技', bizTypes: ['TO G', 'TO C'], title: '市场负责人', name: '吴倩', contact: '186****9033', offer: 'K12 AI伴学系统，覆盖口语评测与自适应练习，已在多省市试点。', ask: '希望对接教育局信息化项目合作方，以及愿意联合申报课题的高校实验室。', aiMatch: true }
+        { company: '友学伴（北京）教育科技有限公司', bizTypes: ['TO C'], title: '联合创始人', name: '唐言为', contact: 'tangyanwei@yourxueban.com', offer: '暂无', ask: '暂无', aiMatch: null, card: 'cards/tangyanwei.png' },
+        { company: '友学伴（北京）教育科技有限公司', bizTypes: ['TO C'], title: '联合创始人', name: '王奕文', contact: 'wangyiwen@yourxueban.com', offer: '暂无', ask: '暂无', aiMatch: null, card: 'cards/wangyiwen.png' },
+        { company: '苏度 (sudo.ai)', bizTypes: ['TO B'], title: '大客户经理', name: '徐晨伊', contact: '17701665605 / xuchenyi@sudo.ai', offer: '暂无', ask: '暂无', aiMatch: null, card: 'cards/xuchenyi.png' },
+        { company: 'BrainCo 强脑科技', bizTypes: ['TO B', 'TO C'], title: '渠道总监', name: '张文华 (Alex)', contact: '13691880776 / wenhua.zhang@brainco.cn', offer: '暂无', ask: '暂无', aiMatch: null, card: 'cards/zhangwenhua.png' },
+        { company: 'BrainCo 强脑科技', bizTypes: ['TO B', 'TO C'], title: '灵巧手销售总监', name: '王少凯 (Allen)', contact: '18027650531 / shaokai.wang@brainco.cn', offer: '暂无', ask: '暂无', aiMatch: null, card: 'cards/wangshaokai.png' },
+        { company: '合肥乐聚机器人技术有限公司', bizTypes: ['TO B', 'TO C'], title: '销售经理', name: '刘世禧', contact: '17521505550 / liushilei@lejurobot.com', offer: '暂无', ask: '暂无', aiMatch: null, card: 'cards/liushixi.png' },
+        { company: '商汤科技', bizTypes: ['TO B', 'TO G'], title: '灵境事业部行业总监', name: '彭荣亮', contact: '+86 13333818916 / pengrongliang@sensetime.com', offer: '暂无', ask: '暂无', aiMatch: null, card: 'cards/pengrongliang.png' },
+        { company: 'BrainCo 强脑科技', bizTypes: ['TO B', 'TO C'], title: '销售经理', name: '聂晶伟 (Vera)', contact: '15810785949 / jingwei.nie@brainco.cn', offer: '暂无', ask: '暂无', aiMatch: null, card: 'cards/niejingwei.png' }
       ];
       const tagClass = { 'TO G': 'tag-g', 'TO B': 'tag-b', 'TO C': 'tag-c' };
       const board = document.getElementById('board');
@@ -550,10 +577,22 @@
       function renderTags(bizTypes) {
         return (bizTypes || []).map(t => '<span class="tag ' + (tagClass[t]||'tag-b') + '">' + escapeHtml(t) + '</span>').join('');
       }
+      function matchBadge(aiMatch) {
+        if (aiMatch === true) return '<div class="match on">🤖 已加入 AI 会后匹配群</div>';
+        if (aiMatch === false) return '<div class="match off">暂未加入 AI 匹配</div>';
+        return '<div class="match off">AI 会后匹配：暂无</div>';
+      }
       function matchEntry(entry, query) {
         if (!query) return true;
         const hay = [entry.company, entry.name, entry.title, entry.contact, entry.offer, entry.ask, ...(entry.bizTypes||[])].join(' ').toLowerCase();
         return hay.includes(query.toLowerCase());
+      }
+      function renderCardPhoto(entry) {
+        if (!entry.card) return '';
+        return '<div class="card-photo">' +
+          '<img src="' + escapeHtml(entry.card) + '" alt="' + escapeHtml(entry.name) + ' 名片" loading="lazy" onerror="this.parentElement.style.display=\'none\'" />' +
+          '<p class="disclaimer">由用户上传，若侵权请联系平台删除</p>' +
+          '</div>';
       }
       function renderCard(entry, index, query) {
         const openClass = allOpen ? ' is-open' : '';
@@ -563,13 +602,15 @@
           '<h3 class="company-name">' + highlight(entry.company, query) + '</h3>' +
           '<p class="sub"><span class="t">' + highlight(entry.title, query) + '</span><span class="sep">·</span><span>' + highlight(entry.name, query) + '</span></p>' +
           '<div class="contact"><span class="label">联系</span><span class="val">' + highlight(entry.contact, query) + '</span></div>' +
-          '<div class="match ' + (entry.aiMatch ? 'on' : 'off') + '">' + (entry.aiMatch ? '🤖 已加入 AI 会后匹配群' : '暂未加入 AI 匹配') + '</div>' +
+          matchBadge(entry.aiMatch) +
           '<div class="demand-panel">' +
             '<div class="block offer"><p class="k">Offer · 我能提供</p><p class="v">' + highlight(entry.offer, query) + '</p></div>' +
             '<div class="block ask"><p class="k">Ask · 我的需求</p><p class="v">' + highlight(entry.ask, query) + '</p></div>' +
           '</div>' +
           '<button type="button" class="demand-toggle"><span class="demand-label">' + label + '</span>' +
-          '<svg class="demand-chevron" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg></button></article>';
+          '<svg class="demand-chevron" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg></button>' +
+          renderCardPhoto(entry) +
+          '</article>';
       }
       function syncBulkLabel() {
         bulkToggle.textContent = allOpen ? '一键收起全部供需' : '一键展开全部供需';
