@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="format-detection" content="telephone=no" />
+  <title>公益 AI 产业资源对接计划</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            void: '#070b14',
+            ink: '#0c1424',
+            edge: '#1e2d4a',
+            cyan: { glow: '#22d3ee', soft: '#67e8f9', dim: '#0e7490' },
+            mint: '#34d399',
+            sky: '#38bdf8'
+          },
+          fontFamily: {
+            display: ['"Syne"', '"Noto Sans SC"', 'sans-serif'],
+            body: ['"Noto Sans SC"', '"PingFang SC"', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      min-height: 100dvh;
+      background:
+        radial-gradient(ellipse 90% 45% at 50% -10%, rgba(14, 116, 144, 0.28), transparent 55%),
+        radial-gradient(ellipse 50% 35% at 100% 30%, rgba(6, 78, 99, 0.18), transparent),
+        linear-gradient(165deg, #070b14 0%, #0a1220 45%, #070b14 100%);
+    }
+    .mesh {
+      background-image:
+        linear-gradient(rgba(34, 211, 238, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(34, 211, 238, 0.035) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+
+    /* 背景区：控制在约 3/4 屏高内 */
+    .tech-slab {
+      position: relative;
+      max-height: 75dvh;
+      border: 1px solid rgba(34, 211, 238, 0.18);
+      background: linear-gradient(145deg, rgba(10, 22, 40, 0.92) 0%, rgba(8, 14, 28, 0.96) 100%);
+      box-shadow:
+        0 0 0 1px rgba(14, 116, 144, 0.12) inset,
+        0 24px 64px rgba(0, 0, 0, 0.45);
+      overflow: hidden;
+    }
+    .tech-slab::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(34, 211, 238, 0.07) 1px, transparent 1px),
+        linear-gradient(rgba(34, 211, 238, 0.07) 1px, transparent 1px);
+      background-size: 32px 32px;
+      mask-image: linear-gradient(180deg, rgba(0,0,0,0.55), transparent 70%);
+      pointer-events: none;
+    }
+    .tech-slab::after {
+      content: '';
+      position: absolute;
+      top: -40%;
+      right: -15%;
+      width: 55%;
+      height: 90%;
+      background: radial-gradient(ellipse, rgba(14, 116, 144, 0.35), transparent 68%);
+      pointer-events: none;
+    }
+    .tech-slab-accent {
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: linear-gradient(180deg, #22d3ee, #0e7490 55%, transparent);
+    }
+    .tech-chip {
+      border: 1px solid rgba(34, 211, 238, 0.22);
+      background: linear-gradient(160deg, rgba(14, 116, 144, 0.22), rgba(7, 11, 20, 0.55));
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+    .tech-chip-bar {
+      height: 2px;
+      width: 22px;
+      background: linear-gradient(90deg, #22d3ee, transparent);
+      margin-bottom: 0.4rem;
+    }
+    .closing-bar {
+      border: 1px solid rgba(52, 211, 153, 0.2);
+      background: linear-gradient(90deg, rgba(6, 78, 59, 0.35), rgba(14, 116, 144, 0.18), rgba(7, 11, 20, 0.4));
+    }
+
+    .biz-card {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(145deg, rgba(18, 28, 48, 0.95) 0%, rgba(10, 16, 30, 0.98) 100%);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+    .biz-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #0e7490, #22d3ee 45%, #38bdf8 75%, transparent);
+    }
+    @media (hover: hover) {
+      .biz-card:hover {
+        border-color: rgba(34, 211, 238, 0.45);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45), 0 0 28px rgba(34, 211, 238, 0.12);
+        transform: translateY(-2px);
+      }
+    }
+    .company-name {
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: #f8fafc;
+      line-height: 1.25;
+    }
+    .demand-panel { display: none; }
+    .biz-card.is-open .demand-panel {
+      display: flex;
+      animation: fadeUp 0.3s ease both;
+    }
+    .biz-card.is-open .demand-chevron { transform: rotate(180deg); color: #22d3ee; }
+    .demand-chevron { transition: transform 0.2s ease; color: #64748b; }
+
+    .search-input {
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .search-input:focus {
+      border-color: rgba(34, 211, 238, 0.55);
+      box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.12), 0 0 24px rgba(34, 211, 238, 0.15);
+      outline: none;
+    }
+    mark.hl {
+      background: rgba(34, 211, 238, 0.28);
+      color: #ecfeff;
+      border-radius: 2px;
+      padding: 0 2px;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-item { animation: fadeUp 0.4s ease both; }
+
+    #board {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    @media (min-width: 768px) {
+      #board { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+    }
+    @media (min-width: 1200px) {
+      #board { grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    }
+  </style>
+</head>
+<body class="font-body text-slate-200 antialiased mesh">
+  <div class="mx-auto w-full max-w-7xl px-4 pb-16 pt-5 sm:px-6 lg:px-8">
+
+    <!-- 背景：压缩至约 3/4 屏 -->
+    <header class="tech-slab relative mb-6 rounded-2xl px-4 py-4 sm:mb-8 sm:px-6 sm:py-5 lg:px-8 lg:py-6">
+      <span class="tech-slab-accent" aria-hidden="true"></span>
+      <div class="relative z-10 flex h-full max-h-[calc(75dvh-2px)] flex-col justify-center">
+        <p class="font-display text-[10px] font-semibold tracking-[0.3em] text-cyan-glow/70 uppercase">
+          WAIC 2026 · PUBLIC GOOD
+        </p>
+        <h1 class="mt-1.5 font-display text-xl font-extrabold leading-tight text-white sm:text-2xl lg:text-3xl">
+          公益 AI 产业资源对接计划
+        </h1>
+        <p class="mt-2 max-w-2xl text-[13px] leading-relaxed text-slate-300/90 sm:text-sm">
+          大型展会里，交流意愿从来都不缺——缺的是被看见、被理解、被接住的路径。
+        </p>
+
+        <div class="mt-3 grid grid-cols-2 gap-2 lg:mt-4 lg:grid-cols-4 lg:gap-3">
+          <div class="tech-chip rounded-lg px-3 py-2.5">
+            <div class="tech-chip-bar"></div>
+            <p class="font-display text-[9px] tracking-[0.16em] text-cyan-glow/55">01</p>
+            <p class="mt-1 text-[12px] leading-snug text-slate-200">门票紧张，有真实需求的人难到场</p>
+          </div>
+          <div class="tech-chip rounded-lg px-3 py-2.5">
+            <div class="tech-chip-bar"></div>
+            <p class="font-display text-[9px] tracking-[0.16em] text-cyan-glow/55">02</p>
+            <p class="mt-1 text-[12px] leading-snug text-slate-200">官方宣传多，难一眼看清合作诉求</p>
+          </div>
+          <div class="tech-chip rounded-lg px-3 py-2.5">
+            <div class="tech-chip-bar"></div>
+            <p class="font-display text-[9px] tracking-[0.16em] text-cyan-glow/55">03</p>
+            <p class="mt-1 text-[12px] leading-snug text-slate-200">注意力向头部集中，中小团队曝光有限</p>
+          </div>
+          <div class="tech-chip rounded-lg px-3 py-2.5">
+            <div class="tech-chip-bar"></div>
+            <p class="font-display text-[9px] tracking-[0.16em] text-cyan-glow/55">04</p>
+            <p class="mt-1 text-[12px] leading-snug text-slate-200">现场时间仓促，意向难沉淀为联系</p>
+          </div>
+        </div>
+
+        <div class="closing-bar mt-3 rounded-lg px-3 py-2.5 sm:px-4">
+          <p class="text-[12px] leading-relaxed text-slate-200 sm:text-[13px]">
+            用标准化信息收集，让有合作需求的人更精准地找到彼此——
+            <span class="font-medium text-mint">纯公益，不收费。</span>
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <!-- 搜索 + 名片墙 -->
+    <section id="board-section">
+      <div class="mb-4 flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+        <div>
+          <h2 class="text-base font-semibold text-white sm:text-lg">公开对接名片墙</h2>
+          <p class="mt-0.5 text-xs text-slate-500">供需默认折叠，点击卡片底部即可展开</p>
+        </div>
+        <div class="relative w-full lg:max-w-md">
+          <svg class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M11 18a7 7 0 100-14 7 7 0 000 14z" />
+          </svg>
+          <input
+            id="search-input"
+            type="search"
+            class="search-input w-full rounded-xl border border-edge bg-ink/80 py-2.5 pl-10 pr-10 text-sm text-white placeholder:text-slate-500"
+            placeholder="搜索企业 / 负责人 / 职位 / 联系方式…"
+            autocomplete="off"
+          />
+          <button
+            id="search-clear"
+            type="button"
+            class="absolute right-2 top-1/2 hidden -translate-y-1/2 rounded-md px-2 py-1 text-xs text-slate-500 transition-all duration-200 hover:text-cyan-soft"
+            aria-label="清空搜索"
+          >清除</button>
+        </div>
+      </div>
+
+      <p id="search-meta" class="mb-3 hidden text-xs text-slate-500"></p>
+      <div id="board" aria-live="polite"></div>
+      <p id="empty-state" class="hidden rounded-2xl border border-dashed border-edge py-12 text-center text-sm text-slate-500">
+        未找到匹配结果，试试企业名或负责人姓名
+      </p>
+    </section>
+
+    <footer class="mt-12 text-center text-[10px] text-slate-600 sm:text-xs">
+      WAIC 2026 · 公益 AI 产业资源对接计划 · 信息由用户自行提供，仅用于合作交流
+    </footer>
+  </div>
+
+  <script>
+    (() => {
+      'use strict';
+
+      const entries = [
+        {
+          company: '星核智能科技',
+          bizTypes: ['TO B'],
+          title: '商务VP',
+          name: '陈思远',
+          contact: 'chen_sy_ai',
+          offer: '企业级多模态大模型私有化部署方案，已服务制造/金融场景，支持本地化部署与合规审计。',
+          ask: '寻找具备行业数据沉淀的制造业客户，以及对AI质检、工艺优化有明确预算的集成商。',
+          aiMatch: true
+        },
+        {
+          company: '灵动机器人',
+          bizTypes: ['TO B', 'TO G'],
+          title: '产品总监',
+          name: '赵雨桐',
+          contact: '138****6621',
+          offer: '自研协作机器人关节模组，峰值扭矩 280N·m，已量产交付，可提供整机联调支持。',
+          ask: '对接整机厂、产线集成商；希望采购视觉定位与力控算法模块。',
+          aiMatch: true
+        },
+        {
+          company: '青澜数据',
+          bizTypes: ['TO C', 'TO B'],
+          title: '创始人',
+          name: '林晓',
+          contact: 'qinglan_data',
+          offer: '面向消费者的AI健康顾问App，日活 12万+；另可开放B端白标SDK。',
+          ask: '寻求医疗器械渠道合作方，以及愿意联合做内容共创的IP方。',
+          aiMatch: false
+        },
+        {
+          company: '云栈算力',
+          bizTypes: ['TO B'],
+          title: '解决方案架构师',
+          name: '周凯',
+          contact: 'yunzhan_gpu',
+          offer: '弹性GPU算力池 + 推理加速中间件，支持国产芯片混部，按量计费。',
+          ask: '对接有推理成本压力的AIGC/Agent创业团队，可提供首月算力补贴包。',
+          aiMatch: true
+        },
+        {
+          company: '启明教育科技',
+          bizTypes: ['TO G', 'TO C'],
+          title: '市场负责人',
+          name: '吴倩',
+          contact: '186****9033',
+          offer: 'K12 AI伴学系统，覆盖口语评测与自适应练习，已在多省市试点。',
+          ask: '希望对接教育局信息化项目合作方，以及愿意联合申报课题的高校实验室。',
+          aiMatch: true
+        }
+      ];
+
+      const tagStyle = {
+        'TO G': 'border-amber-400/40 bg-amber-500/15 text-amber-300',
+        'TO B': 'border-cyan-400/40 bg-cyan-500/15 text-cyan-300',
+        'TO C': 'border-teal-400/40 bg-teal-500/15 text-teal-300'
+      };
+
+      const board = document.getElementById('board');
+      const searchInput = document.getElementById('search-input');
+      const searchClear = document.getElementById('search-clear');
+      const searchMeta = document.getElementById('search-meta');
+      const emptyState = document.getElementById('empty-state');
+
+      function escapeHtml(str) {
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      }
+
+      function highlight(text, query) {
+        const raw = String(text ?? '');
+        if (!query) return escapeHtml(raw);
+        const q = query.trim();
+        if (!q) return escapeHtml(raw);
+        const lower = raw.toLowerCase();
+        const needle = q.toLowerCase();
+        let out = '';
+        let i = 0;
+        while (i < raw.length) {
+          const idx = lower.indexOf(needle, i);
+          if (idx === -1) {
+            out += escapeHtml(raw.slice(i));
+            break;
+          }
+          out += escapeHtml(raw.slice(i, idx));
+          out += `<mark class="hl">${escapeHtml(raw.slice(idx, idx + needle.length))}</mark>`;
+          i = idx + needle.length;
+        }
+        return out;
+      }
+
+      function renderTags(bizTypes) {
+        return (bizTypes || [])
+          .map((t) => `<span class="rounded border px-1.5 py-0.5 text-[10px] font-semibold ${tagStyle[t] || tagStyle['TO B']}">${escapeHtml(t)}</span>`)
+          .join('');
+      }
+
+      function matchEntry(entry, query) {
+        if (!query) return true;
+        const hay = [
+          entry.company, entry.name, entry.title, entry.contact,
+          entry.offer, entry.ask, ...(entry.bizTypes || [])
+        ].join(' ').toLowerCase();
+        return hay.includes(query.toLowerCase());
+      }
+
+      function renderCard(entry, index, query) {
+        return `
+          <article class="biz-card fade-item flex h-full flex-col rounded-2xl border border-edge px-4 pb-3 pt-5 shadow-[0_8px_32px_rgba(0,0,0,0.4)] sm:px-5" style="animation-delay:${Math.min(index, 8) * 0.04}s" data-company="${escapeHtml(entry.company)}">
+            <div class="flex flex-wrap items-center gap-1.5">${renderTags(entry.bizTypes)}</div>
+
+            <h3 class="company-name mt-3 text-lg sm:text-xl">${highlight(entry.company, query)}</h3>
+            <p class="mt-1.5 text-[13px] text-slate-400">
+              <span class="text-slate-300">${highlight(entry.title, query)}</span>
+              <span class="mx-1.5 text-slate-600">·</span>
+              <span>${highlight(entry.name, query)}</span>
+            </p>
+
+            <div class="mt-4 flex items-center gap-2 rounded-xl border border-edge/80 bg-void/60 px-3 py-2.5">
+              <span class="text-[10px] uppercase tracking-wider text-slate-500">联系</span>
+              <span class="font-mono text-sm font-medium text-cyan-soft">${highlight(entry.contact, query)}</span>
+            </div>
+
+            <div class="mt-3">${entry.aiMatch
+              ? '<span class="inline-flex items-center gap-1 text-[11px] text-mint">🤖 已加入 AI 会后匹配群</span>'
+              : '<span class="inline-flex items-center gap-1 text-[11px] text-slate-500">暂未加入 AI 匹配</span>'
+            }</div>
+
+            <div class="demand-panel mt-3 flex-col gap-2">
+              <div class="rounded-xl border border-emerald-500/25 bg-emerald-500/10 px-3 py-2.5">
+                <p class="text-[10px] font-semibold tracking-wider text-mint uppercase">Offer · 我能提供</p>
+                <p class="mt-1 text-[13px] leading-relaxed text-emerald-50/90">${highlight(entry.offer, query)}</p>
+              </div>
+              <div class="rounded-xl border border-sky-500/25 bg-sky-500/10 px-3 py-2.5">
+                <p class="text-[10px] font-semibold tracking-wider text-sky uppercase">Ask · 我的需求</p>
+                <p class="mt-1 text-[13px] leading-relaxed text-sky-50/90">${highlight(entry.ask, query)}</p>
+              </div>
+            </div>
+
+            <button type="button" class="demand-toggle mt-3 flex w-full items-center justify-center gap-1.5 rounded-xl border border-edge py-2 text-xs text-slate-400 transition-all duration-200 hover:border-cyan-dim hover:text-cyan-soft">
+              <span class="demand-label">展开供需详情</span>
+              <svg class="demand-chevron h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+            </button>
+          </article>
+        `;
+      }
+
+      function bindCardToggles() {
+        board.querySelectorAll('.biz-card').forEach((card) => {
+          const btn = card.querySelector('.demand-toggle');
+          const label = card.querySelector('.demand-label');
+          btn.addEventListener('click', () => {
+            const open = card.classList.toggle('is-open');
+            label.textContent = open ? '收起供需详情' : '展开供需详情';
+          });
+        });
+      }
+
+      function render(query = '') {
+        const q = query.trim();
+        const filtered = entries.filter((e) => matchEntry(e, q));
+
+        searchClear.classList.toggle('hidden', !q);
+        if (q) {
+          searchMeta.classList.remove('hidden');
+          searchMeta.textContent = `找到 ${filtered.length} 条与「${q}」相关的结果`;
+        } else {
+          searchMeta.classList.add('hidden');
+        }
+
+        if (!filtered.length) {
+          board.innerHTML = '';
+          emptyState.classList.remove('hidden');
+          return;
+        }
+
+        emptyState.classList.add('hidden');
+        board.innerHTML = filtered.map((e, i) => renderCard(e, i, q)).join('');
+        bindCardToggles();
+      }
+
+      let timer = null;
+      searchInput.addEventListener('input', () => {
+        clearTimeout(timer);
+        timer = setTimeout(() => render(searchInput.value), 120);
+      });
+      searchClear.addEventListener('click', () => {
+        searchInput.value = '';
+        render('');
+        searchInput.focus();
+      });
+
+      render('');
+    })();
+  </script>
+</body>
+</html>
