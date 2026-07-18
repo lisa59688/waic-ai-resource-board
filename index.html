@@ -382,19 +382,36 @@
       border: 1px solid var(--edge);
       border-radius: 16px;
       background: var(--card);
-      padding: 20px 16px;
+      padding: 24px 18px;
     }
     .share img {
-      width: 160px;
-      height: 160px;
+      width: 180px;
+      height: 180px;
       border-radius: 12px;
       border: 1px solid var(--edge);
       background: #fff;
       padding: 8px;
+      object-fit: contain;
     }
-    .share p { margin: 8px 0 0; font-size: 12px; color: var(--muted); }
-    .share a { color: #7dd3fc; word-break: break-all; }
-    .share .note { font-size: 11px; color: var(--dim); line-height: 1.6; max-width: 28rem; margin: 8px auto 0; }
+    .share .title {
+      margin: 14px 0 0;
+      font-size: 14px;
+      font-weight: 600;
+      color: #ffffff;
+    }
+    .share .note {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.75;
+      max-width: 26rem;
+      margin: 10px auto 0;
+      text-align: left;
+    }
+    .share .note em {
+      font-style: normal;
+      color: #fde68a;
+      font-weight: 600;
+    }
     footer {
       margin-top: 32px;
       text-align: center;
@@ -481,9 +498,12 @@
     </section>
 
     <aside class="share">
-      <img src="qr_placeholder.png" alt="扫码打开本页" width="160" height="160" />
-      <p>在线地址：<a href="https://waic-gongyi-duijie.netlify.app/">https://waic-gongyi-duijie.netlify.app/</a></p>
-      <p class="note">扫码或复制上方链接打开。内容更新后重新部署即可同步。</p>
+      <img src="wechat_qr.png" alt="微信二维码" width="180" height="180" />
+      <p class="title">微信交流 · 子衿</p>
+      <p class="note">
+        有明确交流资源需求的企业、展商、投资人等可扫码添加。
+        添加时请备注：<em>个人姓名--企业职位</em>
+      </p>
     </aside>
 
     <footer>WAIC 2026 · 公益 AI 产业资源对接计划 · 信息由用户自行提供，仅用于合作交流</footer>
