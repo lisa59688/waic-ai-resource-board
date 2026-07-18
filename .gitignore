@@ -1,1 +1,7 @@
 .DS_Store
+.vercel
+
+.netlify
+.vercel
+*.zip
+WAIC*
