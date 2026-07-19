@@ -44,15 +44,15 @@
       .wrap { padding: 32px 24px 80px; }
     }
 
-    /* 顶层叙事区：略亮于纯黑，形成第一层 */
+    /* 顶层叙事区：压缩至约 3/4 高度 */
     .hero-panel {
       position: relative;
       border: 1px solid var(--edge);
-      border-radius: 18px;
-      padding: 20px 18px 18px;
-      margin-bottom: 28px;
+      border-radius: 14px;
+      padding: 14px 14px 12px;
+      margin-bottom: 20px;
       background: linear-gradient(165deg, #0e1624 0%, #0a101a 100%);
-      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.06) inset, 0 20px 48px rgba(0,0,0,0.55);
+      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.06) inset, 0 16px 36px rgba(0,0,0,0.55);
       overflow: hidden;
     }
     .hero-panel::before {
@@ -71,49 +71,49 @@
       text-transform: uppercase;
     }
     h1 {
-      margin: 8px 0 0;
-      font-size: 24px;
+      margin: 6px 0 0;
+      font-size: 20px;
       font-weight: 800;
       line-height: 1.25;
       color: #ffffff;
     }
-    @media (min-width: 640px) { h1 { font-size: 30px; } }
+    @media (min-width: 640px) { h1 { font-size: 24px; } }
     .lead {
-      margin: 12px 0 0;
-      font-size: 14px;
-      line-height: 1.75;
+      margin: 8px 0 0;
+      font-size: 13px;
+      line-height: 1.6;
       color: var(--muted);
       max-width: 40rem;
     }
 
     /* 痛点：上下单列 */
     .pain-list {
-      margin: 18px 0 0;
+      margin: 12px 0 0;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 7px;
     }
     .pain-item {
       display: grid;
-      grid-template-columns: 36px 1fr;
-      gap: 12px;
+      grid-template-columns: 28px 1fr;
+      gap: 8px;
       align-items: start;
       border: 1px solid var(--edge);
-      border-radius: 12px;
-      padding: 12px 14px;
+      border-radius: 10px;
+      padding: 8px 10px;
       background: rgba(24, 34, 51, 0.85);
     }
     .pain-num {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
       letter-spacing: 0.08em;
       color: #7dd3fc;
-      padding-top: 2px;
+      padding-top: 1px;
     }
     .pain-text {
       margin: 0;
-      font-size: 13px;
-      line-height: 1.7;
+      font-size: 12px;
+      line-height: 1.55;
       color: var(--muted);
     }
     .hl {
@@ -123,13 +123,13 @@
       padding: 0 1px;
     }
     .closing {
-      margin-top: 14px;
-      border-radius: 12px;
-      padding: 12px 14px;
+      margin-top: 10px;
+      border-radius: 10px;
+      padding: 9px 11px;
       border: 1px solid rgba(110, 231, 183, 0.25);
       background: rgba(6, 78, 59, 0.25);
-      font-size: 13px;
-      line-height: 1.7;
+      font-size: 12px;
+      line-height: 1.55;
       color: var(--muted);
     }
     .closing strong { color: var(--mint); font-weight: 700; }
@@ -482,60 +482,19 @@
 
     .card-photo {
       margin-top: 12px;
-      border: 1px solid var(--edge);
+      border: 1px dashed rgba(148, 163, 184, 0.35);
       border-radius: 10px;
       background: rgba(0,0,0,0.35);
       overflow: hidden;
     }
-    .card-photo-toggle {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      border: 0;
-      background: transparent;
-      color: var(--muted);
-      font-size: 12px;
-      padding: 10px 12px;
-      cursor: pointer;
-      transition: color .2s, background .2s;
-    }
-    .card-photo-toggle:hover {
-      color: #e0f2fe;
-      background: rgba(56, 189, 248, 0.08);
-    }
-    .card-photo-toggle .chev {
-      width: 14px;
-      height: 14px;
-      transition: transform .2s;
-      color: var(--dim);
-    }
-    .card-photo.is-open .card-photo-toggle .chev {
-      transform: rotate(180deg);
-      color: #7dd3fc;
-    }
-    .card-photo-body {
-      display: none;
-      padding: 0 8px 10px;
-    }
-    .card-photo.is-open .card-photo-body {
+    .card-locked {
       display: block;
-    }
-    .card-photo img {
-      display: block;
-      width: 100%;
-      max-height: 420px;
-      object-fit: contain;
-      border-radius: 6px;
-      background: #fff;
-    }
-    .card-photo .disclaimer {
-      margin: 8px 2px 2px;
-      font-size: 10px;
-      line-height: 1.5;
-      color: #64748b;
       text-align: center;
+      font-size: 12px;
+      color: #64748b;
+      padding: 12px;
+      letter-spacing: 0.06em;
+      user-select: none;
     }
 
     .empty {
@@ -556,7 +515,13 @@
       border: 1px solid var(--edge);
       border-radius: 16px;
       background: var(--card);
-      padding: 24px 18px;
+      padding: 22px 16px 8px;
+    }
+    .share-block {
+      padding: 12px 0 22px;
+    }
+    .share-block + .share-block {
+      border-top: 1px solid rgba(42, 58, 82, 0.85);
     }
     .share img {
       width: 180px;
@@ -567,8 +532,13 @@
       padding: 8px;
       object-fit: contain;
     }
+    .share img.tall {
+      height: auto;
+      max-height: 240px;
+      width: min(200px, 72vw);
+    }
     .share .title {
-      margin: 14px 0 0;
+      margin: 12px 0 0;
       font-size: 14px;
       font-weight: 600;
       color: #ffffff;
@@ -578,13 +548,28 @@
       color: var(--muted);
       line-height: 1.75;
       max-width: 26rem;
-      margin: 10px auto 0;
-      text-align: left;
+      margin: 8px auto 0;
+      text-align: center;
+    }
+    .share .note a {
+      color: #7dd3fc;
+      word-break: break-all;
     }
     .share .note em {
       font-style: normal;
       color: #fde68a;
       font-weight: 600;
+    }
+    .view-count {
+      margin: 0 0 12px;
+      font-size: 12px;
+      color: var(--dim);
+      text-align: right;
+    }
+    .view-count strong {
+      color: #7dd3fc;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
     }
     footer {
       margin-top: 32px;
@@ -661,6 +646,7 @@
     </section>
 
     <section id="board-section">
+      <p class="view-count">本页浏览 <strong id="view-count">666</strong> 次</p>
       <div class="toolbar">
         <div>
           <h2>公开对接名片墙</h2>
@@ -681,12 +667,27 @@
     </section>
 
     <aside class="share">
-      <img src="wechat_qr.png" alt="微信二维码" width="180" height="180" />
-      <p class="title">微信交流 · 子衿</p>
-      <p class="note">
-        有明确交流资源需求的企业、展商、投资人等可扫码添加，后续会拉群。
-        添加时请备注：<em>个人姓名--企业职位</em>
-      </p>
+      <div class="share-block">
+        <img src="survey_qr.png" alt="问卷二维码" width="180" height="180" />
+        <p class="title">填写对接问卷</p>
+        <p class="note">
+          欢迎有资源对接需求的伙伴留下信息，让更多人看见你的合作意向。<br />
+          <a href="https://wj.qq.com/s2/27344518/4dcf/" target="_blank" rel="noopener noreferrer">https://wj.qq.com/s2/27344518/4dcf/</a>
+        </p>
+      </div>
+      <div class="share-block">
+        <img class="tall" src="group_qr.png" alt="群聊二维码" width="200" />
+        <p class="title">微信交流群</p>
+        <p class="note">感兴趣的可以加群交流</p>
+      </div>
+      <div class="share-block">
+        <img src="wechat_qr.png" alt="个人微信二维码" width="180" height="180" />
+        <p class="title">个人微信 · 子衿</p>
+        <p class="note">
+          有明确交流资源需求的企业、展商、投资人等可扫码添加，后续会拉群。<br />
+          添加时请备注：<em>个人姓名--企业职位</em>
+        </p>
+      </div>
     </aside>
 
     <footer>WAIC 2026 · 公益 AI 产业资源对接计划 · 信息由用户自行提供，仅用于合作交流</footer>
@@ -696,14 +697,17 @@
     (() => {
       'use strict';
       const entries = [
-        { company: '友学伴（北京）教育科技有限公司', short: '友学伴', bizTypes: ['TO C'], title: '联合创始人', name: '唐言为', contact: 'tangyanwei@yourxueban.com', offer: '暂无', ask: '暂无', aiMatch: null, card: 'cards/tangyanwei.png' },
-        { company: '友学伴（北京）教育科技有限公司', short: '友学伴', bizTypes: ['TO C'], title: '联合创始人', name: '王奕文', contact: 'wangyiwen@yourxueban.com', offer: '暂无', ask: '暂无', aiMatch: null, card: 'cards/wangyiwen.png' },
-        { company: '苏度 (sudo.ai)', short: '苏度', bizTypes: ['TO B'], title: '大客户经理', name: '徐晨伊', contact: '17701665605 / xuchenyi@sudo.ai', offer: '暂无', ask: '暂无', aiMatch: null, card: 'cards/xuchenyi.png' },
-        { company: 'BrainCo 强脑科技', short: 'BrainCo', bizTypes: ['TO B', 'TO C'], title: '渠道总监', name: '张文华 (Alex)', contact: '13691880776 / wenhua.zhang@brainco.cn', offer: '暂无', ask: '暂无', aiMatch: null, card: 'cards/zhangwenhua.png' },
-        { company: 'BrainCo 强脑科技', short: 'BrainCo', bizTypes: ['TO B', 'TO C'], title: '灵巧手销售总监', name: '王少凯 (Allen)', contact: '18027650531 / shaokai.wang@brainco.cn', offer: '暂无', ask: '暂无', aiMatch: null, card: 'cards/wangshaokai.png' },
-        { company: '合肥乐聚机器人技术有限公司', short: '乐聚机器人', bizTypes: ['TO B', 'TO C'], title: '销售经理', name: '刘世禧', contact: '17521505550 / liushilei@lejurobot.com', offer: '暂无', ask: '暂无', aiMatch: null, card: 'cards/liushixi.png' },
-        { company: '商汤科技', short: '商汤', bizTypes: ['TO B', 'TO G'], title: '灵境事业部行业总监', name: '彭荣亮', contact: '+86 13333818916 / pengrongliang@sensetime.com', offer: '暂无', ask: '暂无', aiMatch: null, card: 'cards/pengrongliang.png' },
-        { company: 'BrainCo 强脑科技', short: 'BrainCo', bizTypes: ['TO B', 'TO C'], title: '销售经理', name: '聂晶伟 (Vera)', contact: '15810785949 / jingwei.nie@brainco.cn', offer: '暂无', ask: '暂无', aiMatch: null, card: 'cards/niejingwei.png' }
+        { company: '友学伴（北京）教育科技有限公司', short: '友学伴', bizTypes: ['TO C'], title: '联合创始人', name: '唐言为', contact: 'tangyanwei@yourxueban.com', offer: '暂无', ask: '暂无', aiMatch: null },
+        { company: '友学伴（北京）教育科技有限公司', short: '友学伴', bizTypes: ['TO C'], title: '联合创始人', name: '王奕文', contact: 'wangyiwen@yourxueban.com', offer: '暂无', ask: '暂无', aiMatch: null },
+        { company: '苏度 (sudo.ai)', short: '苏度', bizTypes: ['TO B'], title: '大客户经理', name: '徐晨伊', contact: '17701665605 / xuchenyi@sudo.ai', offer: '暂无', ask: '暂无', aiMatch: null },
+        { company: 'BrainCo 强脑科技', short: 'BrainCo', bizTypes: ['TO B', 'TO C'], title: '渠道总监', name: '张文华 (Alex)', contact: '13691880776 / wenhua.zhang@brainco.cn', offer: '暂无', ask: '暂无', aiMatch: null },
+        { company: 'BrainCo 强脑科技', short: 'BrainCo', bizTypes: ['TO B', 'TO C'], title: '灵巧手销售总监', name: '王少凯 (Allen)', contact: '18027650531 / shaokai.wang@brainco.cn', offer: '暂无', ask: '暂无', aiMatch: null },
+        { company: '合肥乐聚机器人技术有限公司', short: '乐聚机器人', bizTypes: ['TO B', 'TO C'], title: '销售经理', name: '刘世禧', contact: '17521505550 / liushilei@lejurobot.com', offer: '暂无', ask: '暂无', aiMatch: null },
+        { company: '商汤科技', short: '商汤', bizTypes: ['TO B', 'TO G'], title: '灵境事业部行业总监', name: '彭荣亮', contact: '+86 13333818916 / pengrongliang@sensetime.com', offer: '暂无', ask: '暂无', aiMatch: null },
+        { company: 'BrainCo 强脑科技', short: 'BrainCo', bizTypes: ['TO B', 'TO C'], title: '销售经理', name: '聂晶伟 (Vera)', contact: '15810785949 / jingwei.nie@brainco.cn', offer: '暂无', ask: '暂无', aiMatch: null },
+        { company: 'SOTA Tech Shanghai Co., Ltd', short: 'SOTA', bizTypes: ['TO B', 'TO C'], title: 'Founder&CEO', name: 'Easson-Kang', contact: 'eassonkang@sotamoment.com', offer: '海量真实世界 3D 空间数据与 4D 时空交互数据；全球道路路面真实空间数据；仿真数据；4D 交互技术支持（体育、非遗、教育、赛事、音乐会等）', ask: '自动驾驶；通用具身机器人；音乐会与教育领域企业；早期投资', aiMatch: true },
+        { company: '中外运', short: '中外运', bizTypes: ['TO B'], title: '暂无', name: '肖', contact: '13655321937', offer: '数字化产品了解', ask: '暂无', aiMatch: true },
+        { company: '重庆千方实业发展有限公司', short: '千方实业', bizTypes: ['TO B'], title: '招商副总', name: '钟鸿宇', contact: '13883966004', offer: '产业园位于重庆市南岸茶园经济开发区，为人工智能相关行业提供场地，包括办公、展厅、仓储、厂房等', ask: '租赁、购买、共享', aiMatch: true }
       ];
       const tagClass = { 'TO G': 'tag-g', 'TO B': 'tag-b', 'TO C': 'tag-c' };
       const board = document.getElementById('board');
@@ -719,8 +723,51 @@
       function escapeHtml(str) {
         return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
       }
+      function maskPhonesInText(text) {
+        return String(text ?? '').replace(/\+?86[\s-]*1[3-9]\d[\s-]?\d{4}[\s-]?\d{4}|1[3-9]\d{9}/g, (m) => {
+          const d = m.replace(/\D/g, '').replace(/^86/, '');
+          if (d.length < 11) return m;
+          return d.slice(0, 3) + '****' + d.slice(7);
+        });
+      }
       function companyKey(name) {
         return String(name || '').trim().toLowerCase();
+      }
+      function bumpViewCount() {
+        const el = document.getElementById('view-count');
+        if (!el) return;
+        const BASE = 666;
+        const STEP = 5;
+        const endpoints = [
+          'https://api.counterapi.dev/v1/waic-gongyi-duijie/visits/up',
+          'https://api.countapi.xyz/hit/waic-gongyi-duijie/visits'
+        ];
+        const apply = (n) => {
+          const count = Math.max(1, Number(n) || 1);
+          el.textContent = String(BASE + STEP * count);
+        };
+        const tryFetch = (i) => {
+          if (i >= endpoints.length) {
+            try {
+              const key = 'waic_view_hits';
+              const n = Number(localStorage.getItem(key) || 0) + 1;
+              localStorage.setItem(key, String(n));
+              apply(n);
+            } catch (_) {
+              apply(1);
+            }
+            return;
+          }
+          fetch(endpoints[i], { cache: 'no-store' })
+            .then(r => r.ok ? r.json() : Promise.reject())
+            .then(data => {
+              const n = data.count ?? data.value ?? data.data?.count ?? data.data?.up_count;
+              if (n == null) throw new Error('no count');
+              apply(n);
+            })
+            .catch(() => tryFetch(i + 1));
+        };
+        tryFetch(0);
       }
       function buildCompanyIndex() {
         const map = new Map();
@@ -806,27 +853,18 @@
         const hay = [entry.company, entry.name, entry.title, entry.contact, entry.offer, entry.ask, ...(entry.bizTypes||[])].join(' ').toLowerCase();
         return hay.includes(query.toLowerCase());
       }
-      function renderCardPhoto(entry) {
-        if (!entry.card) return '';
-        return '<div class="card-photo">' +
-          '<button type="button" class="card-photo-toggle">' +
-            '<span class="card-photo-label">点击查看名片</span>' +
-            '<svg class="chev" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>' +
-          '</button>' +
-          '<div class="card-photo-body">' +
-            '<img src="' + escapeHtml(entry.card) + '" alt="' + escapeHtml(entry.name) + ' 名片" loading="lazy" onerror="this.closest(\'.card-photo\').style.display=\'none\'" />' +
-            '<p class="disclaimer">由用户上传，若侵权请联系平台删除</p>' +
-          '</div>' +
-          '</div>';
+      function renderCardPhoto() {
+        return '<div class="card-photo" aria-disabled="true"><span class="card-locked">名片 · 无权查看</span></div>';
       }
       function renderCard(entry, index, query) {
         const openClass = allOpen ? ' is-open' : '';
         const label = allOpen ? '收起供需详情' : '展开供需详情';
+        const contactShown = maskPhonesInText(entry.contact);
         return '<article class="biz-card fade-item' + openClass + '" id="card-' + index + '" data-company="' + escapeHtml(entry.company) + '" style="animation-delay:' + (Math.min(index,8)*0.04) + 's">' +
           '<div class="tags">' + renderTags(entry.bizTypes) + '</div>' +
           '<h3 class="company-name">' + highlight(entry.company, query) + '</h3>' +
           '<p class="sub"><span class="t">' + highlight(entry.title, query) + '</span><span class="sep">·</span><span>' + highlight(entry.name, query) + '</span></p>' +
-          '<div class="contact"><span class="label">联系</span><span class="val">' + highlight(entry.contact, query) + '</span></div>' +
+          '<div class="contact"><span class="label">联系</span><span class="val">' + highlight(contactShown, query) + '</span></div>' +
           matchBadge(entry.aiMatch) +
           '<div class="demand-panel">' +
             '<div class="block offer"><p class="k">Offer · 我能提供</p><p class="v">' + highlight(entry.offer, query) + '</p></div>' +
@@ -834,7 +872,7 @@
           '</div>' +
           '<button type="button" class="demand-toggle"><span class="demand-label">' + label + '</span>' +
           '<svg class="demand-chevron" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg></button>' +
-          renderCardPhoto(entry) +
+          renderCardPhoto() +
           '</article>';
       }
       function syncBulkLabel() {
@@ -850,15 +888,6 @@
             const cards = [...board.querySelectorAll('.biz-card')];
             allOpen = cards.length > 0 && cards.every(c => c.classList.contains('is-open'));
             syncBulkLabel();
-          });
-
-          const photo = card.querySelector('.card-photo');
-          if (!photo) return;
-          const photoBtn = photo.querySelector('.card-photo-toggle');
-          const photoLabel = photo.querySelector('.card-photo-label');
-          photoBtn.addEventListener('click', () => {
-            const open = photo.classList.toggle('is-open');
-            photoLabel.textContent = open ? '收起名片' : '点击查看名片';
           });
         });
       }
@@ -890,6 +919,7 @@
       searchClear.addEventListener('click', () => { searchInput.value=''; render(''); searchInput.focus(); });
       renderCompanyCloud();
       render('');
+      bumpViewCount();
     })();
   </script>
 </body>
